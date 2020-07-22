@@ -29,8 +29,6 @@ object MainForm: TMainForm
     Height = 482
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 0
-    ExplicitWidth = 1238
-    ExplicitHeight = 679
     object Label3: TLabel
       Left = 624
       Top = 50
@@ -132,5 +130,19 @@ object MainForm: TMainForm
       TabOrder = 8
       OnClick = Button2Click
     end
+    object Button3: TButton
+      Left = 620
+      Top = 69
+      Width = 75
+      Height = 25
+      Caption = 'Conf IVT Fact'
+      TabOrder = 9
+      OnClick = Button3Click
+    end
+  end
+  object Timer1: TTimer
+    OnTimer = Timer1Timer
+    Left = 120
+    Top = 104
   end
 end

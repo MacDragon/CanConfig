@@ -27,6 +27,8 @@ type
     testeepromwrite: TButton;
     Button1: TButton;
     Button2: TButton;
+    Timer1: TTimer;
+    Button3: TButton;
     procedure FormKeyPress(Sender: TObject; var Key: Char);
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -39,6 +41,8 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
+    procedure Timer1Timer(Sender: TObject);
+    procedure Button3Click(Sender: TObject);
   private
     { Private declarations }
     StartTime: TDateTime;
@@ -49,6 +53,8 @@ type
     ReceiveData : Boolean;
 
     MainStatus : Integer;
+
+    ECUFound : Boolean;
 
     SendPos : Integer;
     SendTime : TStopwatch;
@@ -446,6 +452,9 @@ begin
       onBus.Caption := 'On bus';
       goOnBus.Caption := 'Go off bus';
       StartTime := Now;
+
+      ECUFound := false;
+      MainStatus := 0;
     end
     else
     begin
@@ -504,6 +513,7 @@ begin
   CANFail := false;
   SendData := false;
   ACKReceived := false;
+  ECUFound := false;
   Output.clear;
 end;
 
@@ -567,6 +577,36 @@ begin
 end;
 
 
+procedure TMainForm.Timer1Timer(Sender: TObject);
+begin
+  if SendData then  // ensure timeout runs
+  begin
+     if SendTime.ElapsedMilliseconds > 1000  then
+      begin
+        // timeout
+        ReceiveData := false;
+        SendPos := -1;
+        SendConfig.Enabled := true;
+        GetConfig.Enabled := true;
+        Output.Items.Add('Send Timeout');
+        SendData := false;
+      end;
+  end;
+
+  if ReceiveData then  // ensure timeout runs
+  begin
+     if SendTime.ElapsedMilliseconds > 1000  then
+      begin
+        // timeout
+        ReceiveData := false;
+        SendPos := -1;
+        SendConfig.Enabled := true;
+        GetConfig.Enabled := true;
+        Output.Items.Add('Receive Timeout');
+      end;
+  end;
+end;
+
 procedure TMainForm.sendIVT(msg0, msg1, msg2, msg3 : byte);
 var
   msg: array[0..7] of byte;
@@ -584,9 +624,7 @@ end;
 procedure TMainForm.Button1Click(Sender: TObject);
 begin
   with CanChannel1 do begin
-    if not Active then begin
-      if True then
-
+    if Active then begin
      // Bitrate := canBITRATE_500K;
       Bitrate := canBITRATE_1M;
 
@@ -615,7 +653,7 @@ begin
           sendIVT( $34, 1, 1, 0);    // turn operation back on.
 
 //          BusActive := false;
-
+                output.Items.Add('IVT programmed');
       end
     end;
   end;
@@ -624,9 +662,7 @@ end;
 procedure TMainForm.Button2Click(Sender: TObject);
 begin
   with CanChannel1 do begin
-    if not Active then begin
-      if True then
-
+    if Active then begin
    //   Bitrate := canBITRATE_500K;
       Bitrate := canBITRATE_1M;
 
@@ -666,12 +702,58 @@ begin
 
                                     // trigger $31, 7 = i,v1,v2
        //   BusActive := false;
-
+                 output.Items.Add('IVT programmed');
       end
     end;
   end;
 end;
 
+
+procedure TMainForm.Button3Click(Sender: TObject);
+begin
+  with CanChannel1 do begin
+    if not Active then begin
+        Bitrate := canBITRATE_500K;
+
+        Channel := CanDevices.ItemIndex;
+
+        Options := [ccNotExclusive];
+
+        Open;
+        OnCanRx := CanChannel1CanRx;
+        BusActive := true;
+        CanDevices.Enabled := false;
+        StartTime := Now;
+        with CanChannel1 do begin
+            sendIVT( $34, 0, 1, 0);     // stop operation.
+            sendIVT( $3A ,2, 0, 0);     // set 1mbit canbus.
+
+           // cyclic default settings..
+            sendIVT( $20, 2, 0, 10);  // current 20ms
+            sendIVT( $21, 2, 0, 10);  // voltages 60ms
+            sendIVT( $22, 2, 0, 10);
+            sendIVT( $23, 0, 0, 10);
+
+            sendIVT( $24, 0, 0, 100);    // temp on. 100ms
+            sendIVT( $25, 2, 0, 100);    // watts on. 100ms
+            sendIVT( $26, 0, 0, 100);   // watt hours on.  100ms
+            sendIVT( $27, 2, 0, 255);   // watt hours on.  100ms
+            sendIVT( $32, 0, 0, 100);   // save settings.
+            sendIVT( $34, 1, 1, 0);    // turn operation back on.
+
+            BusActive := false;
+            Close;
+            Bitrate := canBITRATE_1M;
+            output.Items.Add('IVT programmed');
+        end;
+        CanDevices.Enabled := true;
+    end
+    else
+    begin
+      output.Items.Add('Go offbus to factory program, different can rate.');
+    end;
+  end;
+end;
 
 procedure TMainForm.CanChannel1CanRx(Sender: TObject);
 var
@@ -683,8 +765,10 @@ var
   formattedDateTime, str : string;
 begin
 //  Output.Items.BeginUpdate;
-  with CanChannel1 do begin
-    while Read(id, msg, dlc, flag, time) >= 0 do begin
+  with CanChannel1 do
+  begin
+    while Read(id, msg, dlc, flag, time) >= 0 do
+    begin
       DateTimeToString(formattedDateTime, 'hh:mm:ss.zzzzzz', SysUtils.Now);
       if flag = $20 then
       begin
@@ -705,8 +789,66 @@ begin
                       ','+ IntToStr(msg[6])+','+IntToStr(msg[7])
                       +') : ' + formattedDateTime);    }
                  end;
-        end;
+          $20 : begin
+            if not ECUFound then
+            begin
+              ECUFound := true;
+              Output.Items.Add('ECU Found');
 
+              if MainStatus <> msg[1] then
+              begin
+                Output.Items.Add('StatusChange('+IntToStr(msg[1])+') '+formattedDateTime);
+                Output.TopIndex := Output.Items.Count - 1;
+                MainStatus := msg[1];
+              end;
+            end;
+
+            if ( msg[0] = 30 ) then
+            begin
+                // message sending
+                if msg[1] = 1 then
+                begin
+            //      Output.Items.Add('DataAck');
+                  ACKReceived := true;
+                  SendTime.Reset;
+                  SendTime.Start;
+                  SendNextData;
+                end else if msg[1] = 99 then
+                begin
+                  Output.Items.Add('DataErr!');
+                  ACKReceived := false;
+                  SendData := false;
+                  SendTime.Stop;
+                  SendNextData;
+                  SendConfig.Enabled := true;
+                end;
+            end
+          end;
+
+          $21 : begin
+            if ReceiveData then
+            begin
+              if msg[0] = 8 then  // receive data.
+              begin
+                ReceiveSize := msg[1]*256+msg[2];
+                SendPos := 0;
+                SendDataAck(1);
+                Output.Items.Add('StartReceive('+inttostr(Receivesize)+')');
+                SendTime := TStopwatch.StartNew;
+              end;
+
+              if msg[0] = 9 then  // receive data.
+              begin
+     //            Output.Items.Add('RCV block');;
+                 ReceiveNextData(msg);
+                 SendTime.Reset;
+                 SendTime.Start;
+              end;
+            end;
+
+          end;
+
+        end;
       end;
     end;
   end;
