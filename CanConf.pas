@@ -234,10 +234,14 @@ end;
 procedure TMainForm.SendDataAck(code: byte);
 var
   msg: array[0..7] of byte;
+  i : integer;
 begin
-        msg[0] := 30; // send err
-        msg[1] := code;
-        CanSend($21,msg,3,0);
+  for i := 0 to 7 do
+    msg[i] := 0;
+
+  msg[0] := 30; // send err
+  msg[1] := code;
+  CanSend($21,msg,8,0);
 end;
 
 procedure TMainForm.ReceiveNextData( var data: array of byte );
