@@ -1,4 +1,9 @@
 unit CanChanEx;
+
+{$IFDEF FPC}
+  {$MODE Delphi}
+{$ENDIF}
+
 (*
 **                        Copyright 1998 by KVASER AB
 **                  P.O Box 4076 SE-51104 KINNAHULT, SWEDEN
@@ -11,7 +16,12 @@ unit CanChanEx;
 interface
 
 uses
-  SysUtils, Windows, Messages, Classes, Graphics, Controls, Forms, CANLIB;
+{$IFnDEF FPC}
+  Windows,
+{$ELSE}
+  LCLIntf, LCLType, LMessages,
+{$ENDIF}
+  SysUtils, Messages, Classes, Graphics, Controls, Forms, CANLIB;
 
 type
    { Error in the DLL }
@@ -202,7 +212,9 @@ begin
   if not (csDesigning in ComponentState) then begin
     try
       canInitializeLibrary;
+      {$IFnDEF FPC}
       FWinHandle := Classes.AllocateHWnd(MessageHandler);
+      {$ENDIF}
       FDllFailed := False;
     except
       FDllFailed := True;
@@ -219,7 +231,9 @@ end;
 destructor TCanChannelEx.Destroy;
 begin
   if not (csDesigning in ComponentState) then begin
+    {$IFnDEF FPC}
     Classes.DeallocateHWnd(FWinHandle);
+    {$ENDIF}
     if FActive and (not FDllFailed) then Close;
   end;
   inherited Destroy;

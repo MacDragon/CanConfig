@@ -1,7 +1,15 @@
 program CanConfig;
 
+{$IFDEF FPC}
+  {$MODE Delphi}
+{$ENDIF}
+
 uses
+{$IFnDEF FPC}
   Vcl.Forms,
+{$ELSE}
+  Interfaces,Forms,
+{$ENDIF}
   CanConf in 'CanConf.pas' {MainForm};
 
 {$R *.res}

@@ -1,5 +1,9 @@
 unit CanConf;
 
+{$IFDEF FPC}
+  {$MODE Delphi}
+{$ENDIF}
+
 interface
 
 {$Define HPF20}
@@ -9,8 +13,7 @@ uses
 //  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, CanChanEx, Vcl.ExtCtrls,
 //  Vcl.Mask;
   Windows, Messages, SysUtils, Variants, Classes, Graphics,
-  Controls, Forms, Dialogs, StdCtrls, CanChanEx, ExtCtrls,
-  Mask, System.Diagnostics;
+  Controls, Forms, Dialogs, StdCtrls, CanChanEx, ExtCtrls, stopwatch;
 
 type
   TMainForm = class(TForm)
@@ -81,7 +84,11 @@ implementation
 
 uses DateUtils, canlib, consts;
 
-{$R *.dfm}
+{$IFnDEF FPC}
+  {$R *.dfm}
+{$ELSE}
+  {$R *.lfm}
+{$ENDIF}
 
 const
 {$IfDef HPF19}
@@ -191,8 +198,6 @@ begin
     if openDialog.Execute
     then
     begin
-      openDialog.FileName;
-
       F := TFileStream.Create(openDialog.FileName, fmOpenRead);
       try
         if F.Size = 4096 then
@@ -312,8 +317,6 @@ begin
             if saveDialog.Execute
             then
             begin
-
-              saveDialog.FileName;
               try
                 F := TFileStream.Create(saveDialog.FileName, fmCreate);
 

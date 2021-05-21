@@ -1,0 +1,22 @@
+CanConfig.lpi Note: Added defines -dBorland -dVer150 -dDelphi7 -dCompiler6_Up -dPUREPASCAL in custom options
+ Progress: Found all unit files
+CanConfig.dpr(1,19) Note: Added MODE Delphi syntax modifier after unit name.
+ : 
+ : *** Converting unit files belonging to project/package ***
+CanConf.pas Note: Replaced unit "Mask" with "MaskEdit" in uses section.
+CanConf.pas Note: Replaced unit "Windows" with "LCLIntf, LCLType, LMessages" in uses section.
+CanConf.pas(1,14) Note: Added MODE Delphi syntax modifier after unit name.
+ : 
+ : *** Converting unit files found during conversion ***
+consts.pas(1,13) Note: Added MODE Delphi syntax modifier after unit name.
+canchanex.pas Note: Replaced unit "Windows" with "LCLIntf, LCLType, LMessages" in uses section.
+canchanex.pas(1,16) Note: Added MODE Delphi syntax modifier after unit name.
+canlib.pas Note: Replaced unit "Windows" with "LCLIntf, LCLType, LMessages" in uses section.
+canlib.pas(1,13) Note: Added MODE Delphi syntax modifier after unit name.
+ : 
+ : *** Fixing used units and Repairing form files ***
+CanConf.pas Note: Removed property "TextHeight".
+CanConf.pas Note: Removed property "DesignSize".
+CanConf.pas Note: Removed property "OldCreateOrder".
+ Progress: Conversion took: 00:00:13
+ : Conversion Ready.

@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="11"/>
+    <BuildModes Active="Default"/>
+    <Units Count="7">
+      <Unit0>
+        <Filename Value="CanConfig.dpr"/>
+        <IsPartOfProject Value="True"/>
+        <CursorPos X="14" Y="11"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="CanConf.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="192"/>
+        <CursorPos X="9" Y="201"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="..\ECU-Tester\backup\consts.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="6"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="canchanex.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="CanChanEx"/>
+        <EditorIndex Value="5"/>
+        <TopLine Value="352"/>
+        <CursorPos X="10" Y="364"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="canlib.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="CANLIB"/>
+        <EditorIndex Value="4"/>
+        <TopLine Value="841"/>
+        <CursorPos X="6" Y="853"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="C:\lazarus\lcl\dialogs.pp"/>
+        <UnitName Value="Dialogs"/>
+        <EditorIndex Value="3"/>
+        <TopLine Value="235"/>
+        <CursorPos X="3" Y="220"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="stopwatch.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="16"/>
+        <CursorPos X="5" Y="191"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit6>
+    </Units>
+    <JumpHistory Count="21" HistoryIndex="20">
+      <Position1>
+        <Filename Value="CanConf.pas"/>
+        <Caret TopLine="82"/>
+      </Position1>
+      <Position2>
+        <Filename Value="canlib.pas"/>
+        <Caret Line="853" Column="6" TopLine="841"/>
+      </Position2>
+      <Position3>
+        <Filename Value="canchanex.pas"/>
+        <Caret Line="364" Column="10" TopLine="352"/>
+      </Position3>
+      <Position4>
+        <Filename Value="CanConf.pas"/>
+        <Caret Line="68" Column="5" TopLine="58"/>
+      </Position4>
+      <Position5>
+        <Filename Value="CanConf.pas"/>
+        <Caret Line="21" Column="24"/>
+      </Position5>
+      <Position6>
+        <Filename Value="C:\lazarus\lcl\dialogs.pp"/>
+        <Caret TopLine="10"/>
+      </Position6>
+      <Position7>
+        <Filename Value="C:\lazarus\lcl\dialogs.pp"/>
+        <Caret Line="183" Column="13" TopLine="172"/>
+      </Position7>
+      <Position8>
+        <Filename Value="CanConf.pas"/>
+        <Caret Line="206" Column="10" TopLine="188"/>
+      </Position8>
+      <Position9>
+        <Filename Value="CanConf.pas"/>
+        <Caret Line="328" Column="13" TopLine="316"/>
+      </Position9>
+      <Position10>
+        <Filename Value="CanConf.pas"/>
+        <Caret Line="390" Column="17" TopLine="378"/>
+      </Position10>
+      <Position11>
+        <Filename Value="CanConf.pas"/>
+        <Caret Line="569" Column="12" TopLine="558"/>
+      </Position11>
+      <Position12>
+        <Filename Value="CanConf.pas"/>
+        <Caret Line="600" Column="8" TopLine="588"/>
+      </Position12>
+      <Position13>
+        <Filename Value="CanConf.pas"/>
+        <Caret Line="614" Column="9" TopLine="603"/>
+      </Position13>
+      <Position14>
+        <Filename Value="CanConf.pas"/>
+        <Caret Line="830" Column="19" TopLine="817"/>
+      </Position14>
+      <Position15>
+        <Filename Value="CanConf.pas"/>
+        <Caret Line="838" Column="16" TopLine="825"/>
+      </Position15>
+      <Position16>
+        <Filename Value="CanConf.pas"/>
+        <Caret Line="861" Column="19" TopLine="841"/>
+      </Position16>
+      <Position17>
+        <Filename Value="CanConfig.dpr"/>
+        <Caret Line="11" Column="3"/>
+      </Position17>
+      <Position18>
+        <Filename Value="CanConfig.dpr"/>
+        <Caret Line="22"/>
+      </Position18>
+      <Position19>
+        <Filename Value="CanConf.pas"/>
+      </Position19>
+      <Position20>
+        <Filename Value="CanConf.pas"/>
+        <Caret Line="16" Column="69" TopLine="4"/>
+      </Position20>
+      <Position21>
+        <Filename Value="CanConf.pas"/>
+        <Caret Line="174" Column="23" TopLine="170"/>
+      </Position21>
+    </JumpHistory>
+    <RunParams>
+      <FormatVersion Value="2"/>
+      <Modes Count="0" ActiveMode=""/>
+    </RunParams>
+  </ProjectSession>
+  <SkipCheckLCLInterfaces Value="True"/>
+</CONFIG>

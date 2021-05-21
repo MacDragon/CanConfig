@@ -1,4 +1,9 @@
 unit CANLIB;
+
+{$IFDEF FPC}
+  {$MODE Delphi}
+{$ENDIF}
+
 //
 // Copyright 1995-2018 by KVASER AB
 // WWW: http://www.kvaser.com
@@ -14,8 +19,12 @@ interface
   {$IF Defined(WIN32) or Defined(WIN64)}
 
   uses
-    Messages,
-    Windows;
+{$IFnDEF FPC}
+  Windows,
+{$ELSE}
+  LCLIntf, LCLType, LMessages,
+{$ENDIF}
+  Messages;
   {$ENDIF}
 
   const
@@ -348,9 +357,9 @@ interface
     TWMCan = record // Type declaration for windows or dos message
       Msg: Cardinal;
       case Integer of
-        0: (WParam: Cardinal;
-            LParam: Longint;
-            Result: Longint);
+        0: (WParam: WPARAM;
+            LParam: LPARAM;
+            Result: LRESULT);
 
         1: (handle: Cardinal; // CAN handle issuing message.
             minorMsg: Word;   // Message types.
@@ -841,7 +850,7 @@ implementation
       err: Integer;
     begin
       hDLL := LoadLibrary(DLLName);
-      err  := GetLastError;
+     // err  := GetLastError;
       if hDLL = 0 then
       begin
         raise Exception.create(Format('Can not load the CAN driver - is it correctly installed? ' + '(Error 0x%8.8x)', [err]));
